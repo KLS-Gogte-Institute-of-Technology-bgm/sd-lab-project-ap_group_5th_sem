@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1">
+		
+		<title>Crime Management</title>
+		
+		<!-- Loading third party fonts -->
+		<link href="http://fonts.googleapis.com/css?family=Titillium+Web:300,400,700|" rel="stylesheet" type="text/css">
+		<link href="fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="css/animate.css">
+		<!-- Icomoon Icon Fonts-->
+		<link rel="stylesheet" href="css/icomoon.css">
+		<!-- Themify Icons-->
+		<link rel="stylesheet" href="css/themify-icons.css">
+		<!-- Bootstrap  -->
+		<link rel="stylesheet" href="css/bootstrap.css">
+	 	<link rel="stylesheet" href="css/scss.css">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+			<!-- Magnific Popup -->
+			<link rel="stylesheet" href="css/magnific-popup.css">
+		<script src="js/modernizr-2.6.2.min.js"></script>
+		<!-- Owl Carousel  -->
+		<link rel="stylesheet" href="css/owl.carousel.min.css">
+		<link rel="stylesheet" href="css/owl.theme.default.min.css">
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="style1.css">
+
+	</head>
+
+
+	<body>
+		
+		<div id="site-content">
+			
+			<header class="site-header">
+				<div class="container">
+					<a id="branding" href="index.html">
+						<img src="images/logo1.png" height="150px" width="150px" alt="Company Logo" class="logo">
+						<h1 class="site-title">Crime<span>Management</span></h1>
+					</a>
+
+					<ul class="nav">
+					  <li class="drop">User
+	    				<ul>
+					      <li><a href="publicviewcomplaint.php">View Complaint Progress</a></li>
+	     				  <li><a href="addcomplaint.php">Add Complaint</a></li>
+
+	    				</ul>
+	  				  </li>
+					  <li><a href="logout.php">Logout</a></li>
+				</ul>
+					<nav class="mobile-navigation"></nav>
+				</div>
+			</header><!-- .site-header -->
+
+			<main class="main-content" style="background:url('images/back.jpg')">
+				
+				<div class="fullwidth-block content">
+					<div class="container">
+						<h2> User Update Details!!</h2>
+						<div class="row">
+							<div class="col-md-5">
+								<?php
+					  include_once("dbconn.php");
+					  $user=$_GET['id'];
+
+
+					  $query="SELECT * FROM user_reg where adharno='$user'";
+					  $result=mysqli_query($con,$query);  
+					  $i=0;
+			?>          
+								<form action="" class="contact-form" method="POST"style="background-color:#fff !important;" >
+								<?php while($rows=mysqli_fetch_assoc($result)){  ?>
+  									<input class="form-control" placeholder="Name"  type="text" name="fname" autofocus pattern="[A-Z a-z]+" title="Enter Only characters"   required>
+
+									<input class="form-control" placeholder="Adhar No" type="text" name="adhar"  pattern="(?=.*\d)(?=.*[0-9]).{12}" title="Must contain integers with 12 digits" value="<?php echo $rows['adharno'];?>" readonly>
+
+									<input class="form-control" placeholder="Address" type="text" name="addr" value="<?php echo $rows['address'];?>" required>
+
+									<input class="form-control" placeholder="Contact No" type="text" name="contact" pattern="(?=.*\d)(?=.*[0-9]).{10}" title="Must contain integers with 10 digits" value="<?php echo $rows['contact_no'];?>" required>
+									<input class="form-control" placeholder="Email Id" value="<?php echo $rows['email_id'];?>" type="email" name="email">
+									
+									<input class="form-control" placeholder="Area" type="text" name="area" pattern="[A-Z a-z]+" value="<?php echo $rows['area'];?>" title="Enter Only characters" required>
+
+ <?php $i++; } ?>
+									
+									<div class="text-right">
+										<input type="submit" value="Update" name="submit">
+										<a href="login.php" style="color:#f63f3f;" >Login Here!!</a>
+									</div>
+
+								</form>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				
+				
+<?php
+if (isset($_POST['submit'])) {
+	$fname=$_POST['fname'];
+	$adharno=$_POST['adhar'];
+	$address=$_POST['addr'];
+	$contact=$_POST['contact'];
+	$email=$_POST['email'];
+	$area=$_POST['area'];
+	$password=$_POST['pass'];
+
+	include 'dbconn.php';
+
+	$query="UPDATE user_reg SET u_name='$fname',address='$address',contact_no='$contact',email_id='$email',area='$area' where adharno='$user'";
+
+	$row=mysqli_query($con,$query);
+	if(!$row){
+		echo "<script type='text/javascript'>alert('Update Failed'); </script>";
+	} else { 
+		echo "<script type='text/javascript'>alert('Updated Account'); window.location='publicViewaccount.php'; </script>";
+	}
+}
+
+?>
+
+				
+
+				
+			</main> <!-- .main-content -->
+
+			<footer class="site-footer">
+				<div class="container">
+					<div class="copy">
+						<p>GIT 2020</p>
+					</div>
+				</div>
+			</footer> <!-- .site-footer -->
+
+		</div> <!-- #site-content -->
+
+		
+
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+		<script src="js/plugins.js"></script>
+		<script src="js/app.js"></script>
+		
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Carousel -->
+	<script src="js/owl.carousel.min.js"></script>
+	<!-- countTo -->
+	<script src="js/jquery.countTo.js"></script>
+	<!-- Magnific Popup -->
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/magnific-popup-options.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
+	</body>
+
+</html>
